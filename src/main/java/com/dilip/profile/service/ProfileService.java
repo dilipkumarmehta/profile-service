@@ -4,7 +4,7 @@ import com.dilip.profile.beans.Profile;
 
 public interface ProfileService {
 
-	public Profile viewProfile(Profile profile);
+	public Profile viewProfile(String mobileNumber);
 
 	public String createProfile(Profile profile);
 

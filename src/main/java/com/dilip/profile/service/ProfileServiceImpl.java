@@ -1,10 +1,15 @@
 package com.dilip.profile.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.dilip.profile.beans.Profile;
+import com.dilip.profile.exception.ProfileNotFoundException;
 
 @Service
 public class ProfileServiceImpl implements ProfileService {
@@ -13,9 +18,15 @@ public class ProfileServiceImpl implements ProfileService {
 	MongoTemplate mongoTemplate;
 
 	@Override
-	public Profile viewProfile(Profile profile) {
-		// TODO Auto-generated method stub
-		return null;
+	public Profile viewProfile(String mobileNumber) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("mobileNubmer").is(mobileNumber));
+		Profile profile = mongoTemplate.findOne(query, Profile.class);
+		if (profile == null) {
+			throw new ProfileNotFoundException(mobileNumber);
+		}
+
+		return profile;
 	}
 
 	@Override
@@ -28,6 +39,7 @@ public class ProfileServiceImpl implements ProfileService {
 	@Override
 	public String updateProfile(Profile profile) {
 		// TODO Auto-generated method stub
+		// mongoTemplate.findAndModify(query, update, entityClass)
 		return null;
 	}
 

@@ -1,12 +1,12 @@
 package com.dilip.profile.controller;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dilip.profile.beans.Profile;
@@ -19,9 +19,9 @@ public class ProfileController {
 	ProfileService profileService;
 
 	@GetMapping(value = "profile/view")
-	public Profile viewProfile(@RequestBody Profile profile) {
-
-		return profile;
+	public Profile viewProfile(@RequestParam("mobileNumber") String mobileNumber) {
+		
+		return profileService.viewProfile(mobileNumber);
 
 	}
 
@@ -39,7 +39,7 @@ public class ProfileController {
 	}
 
 	@DeleteMapping(value = "profile/delete")
-	public boolean deleteProfile(@PathParam("mobileNumber") int mobileNumber) {
+	public boolean deleteProfile(@PathVariable("mobileNumber") int mobileNumber) {
 		return false;
 
 	}
